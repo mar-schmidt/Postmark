@@ -1,0 +1,693 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2C6AB5182F975F4D0070142A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6AB5172F975F4D0070142A /* StoreKit.framework */; };
+		2C97CF172F8EB92D0059A00A /* AppAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2C97CF162F8EB92D0059A00A /* AppAuth */; };
+		2C97CF192F8EB92D0059A00A /* AppAuthCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2C97CF182F8EB92D0059A00A /* AppAuthCore */; };
+		2C97CF232F8F741E0059A00A /* MenuBarExtraAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 2C97CF222F8F741E0059A00A /* MenuBarExtraAccess */; };
+		2CD702C22F90287F004914AA /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2CD702C12F90287F004914AA /* FirebaseAnalytics */; };
+		2CD702C42F90287F004914AA /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2CD702C32F90287F004914AA /* FirebaseAnalyticsCore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2C97CE992F8EA1070059A00A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C97CE832F8EA1050059A00A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2C97CE8A2F8EA1050059A00A;
+			remoteInfo = Postmark;
+		};
+		2C97CEA32F8EA1070059A00A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C97CE832F8EA1050059A00A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2C97CE8A2F8EA1050059A00A;
+			remoteInfo = Postmark;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2C6AB5172F975F4D0070142A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		2C97CE8B2F8EA1050059A00A /* Postmark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Postmark.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C97CE982F8EA1070059A00A /* PostmarkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostmarkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C97CEA22F8EA1070059A00A /* PostmarkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostmarkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2C97CEDE2F8EA9520059A00A /* Exceptions for "Postmark" folder in "Postmark" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2C97CE8A2F8EA1050059A00A /* Postmark */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		2C97CE8D2F8EA1050059A00A /* Postmark */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2C97CEDE2F8EA9520059A00A /* Exceptions for "Postmark" folder in "Postmark" target */,
+			);
+			path = Postmark;
+			sourceTree = "<group>";
+		};
+		2C97CE9B2F8EA1070059A00A /* PostmarkTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PostmarkTests;
+			sourceTree = "<group>";
+		};
+		2C97CEA52F8EA1070059A00A /* PostmarkUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PostmarkUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2C97CE882F8EA1050059A00A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C97CF172F8EB92D0059A00A /* AppAuth in Frameworks */,
+				2C97CF232F8F741E0059A00A /* MenuBarExtraAccess in Frameworks */,
+				2CD702C42F90287F004914AA /* FirebaseAnalyticsCore in Frameworks */,
+				2C6AB5182F975F4D0070142A /* StoreKit.framework in Frameworks */,
+				2CD702C22F90287F004914AA /* FirebaseAnalytics in Frameworks */,
+				2C97CF192F8EB92D0059A00A /* AppAuthCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C97CE952F8EA1070059A00A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C97CE9F2F8EA1070059A00A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2C6AB5162F975F4D0070142A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2C6AB5172F975F4D0070142A /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2C97CE822F8EA1050059A00A = {
+			isa = PBXGroup;
+			children = (
+				2C97CE8D2F8EA1050059A00A /* Postmark */,
+				2C97CE9B2F8EA1070059A00A /* PostmarkTests */,
+				2C97CEA52F8EA1070059A00A /* PostmarkUITests */,
+				2C6AB5162F975F4D0070142A /* Frameworks */,
+				2C97CE8C2F8EA1050059A00A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2C97CE8C2F8EA1050059A00A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2C97CE8B2F8EA1050059A00A /* Postmark.app */,
+				2C97CE982F8EA1070059A00A /* PostmarkTests.xctest */,
+				2C97CEA22F8EA1070059A00A /* PostmarkUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2C97CE8A2F8EA1050059A00A /* Postmark */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C97CEAC2F8EA1070059A00A /* Build configuration list for PBXNativeTarget "Postmark" */;
+			buildPhases = (
+				2C97CE872F8EA1050059A00A /* Sources */,
+				2C97CE882F8EA1050059A00A /* Frameworks */,
+				2C97CE892F8EA1050059A00A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2C97CE8D2F8EA1050059A00A /* Postmark */,
+			);
+			name = Postmark;
+			packageProductDependencies = (
+				2C97CF162F8EB92D0059A00A /* AppAuth */,
+				2C97CF182F8EB92D0059A00A /* AppAuthCore */,
+				2C97CF222F8F741E0059A00A /* MenuBarExtraAccess */,
+				2CD702C12F90287F004914AA /* FirebaseAnalytics */,
+				2CD702C32F90287F004914AA /* FirebaseAnalyticsCore */,
+			);
+			productName = Postmark;
+			productReference = 2C97CE8B2F8EA1050059A00A /* Postmark.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2C97CE972F8EA1070059A00A /* PostmarkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C97CEAF2F8EA1070059A00A /* Build configuration list for PBXNativeTarget "PostmarkTests" */;
+			buildPhases = (
+				2C97CE942F8EA1070059A00A /* Sources */,
+				2C97CE952F8EA1070059A00A /* Frameworks */,
+				2C97CE962F8EA1070059A00A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2C97CE9A2F8EA1070059A00A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2C97CE9B2F8EA1070059A00A /* PostmarkTests */,
+			);
+			name = PostmarkTests;
+			packageProductDependencies = (
+			);
+			productName = PostmarkTests;
+			productReference = 2C97CE982F8EA1070059A00A /* PostmarkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2C97CEA12F8EA1070059A00A /* PostmarkUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C97CEB22F8EA1070059A00A /* Build configuration list for PBXNativeTarget "PostmarkUITests" */;
+			buildPhases = (
+				2C97CE9E2F8EA1070059A00A /* Sources */,
+				2C97CE9F2F8EA1070059A00A /* Frameworks */,
+				2C97CEA02F8EA1070059A00A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2C97CEA42F8EA1070059A00A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2C97CEA52F8EA1070059A00A /* PostmarkUITests */,
+			);
+			name = PostmarkUITests;
+			packageProductDependencies = (
+			);
+			productName = PostmarkUITests;
+			productReference = 2C97CEA22F8EA1070059A00A /* PostmarkUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2C97CE832F8EA1050059A00A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2630;
+				LastUpgradeCheck = 2630;
+				TargetAttributes = {
+					2C97CE8A2F8EA1050059A00A = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					2C97CE972F8EA1070059A00A = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 2C97CE8A2F8EA1050059A00A;
+					};
+					2C97CEA12F8EA1070059A00A = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 2C97CE8A2F8EA1050059A00A;
+					};
+				};
+			};
+			buildConfigurationList = 2C97CE862F8EA1050059A00A /* Build configuration list for PBXProject "Postmark" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2C97CE822F8EA1050059A00A;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2C97CF152F8EB92D0059A00A /* XCRemoteSwiftPackageReference "AppAuth-iOS" */,
+				2C97CF212F8F741E0059A00A /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
+				2CD702C02F90287F004914AA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 2C97CE8C2F8EA1050059A00A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2C97CE8A2F8EA1050059A00A /* Postmark */,
+				2C97CE972F8EA1070059A00A /* PostmarkTests */,
+				2C97CEA12F8EA1070059A00A /* PostmarkUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2C97CE892F8EA1050059A00A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C97CE962F8EA1070059A00A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C97CEA02F8EA1070059A00A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2C97CE872F8EA1050059A00A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C97CE942F8EA1070059A00A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C97CE9E2F8EA1070059A00A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2C97CE9A2F8EA1070059A00A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2C97CE8A2F8EA1050059A00A /* Postmark */;
+			targetProxy = 2C97CE992F8EA1070059A00A /* PBXContainerItemProxy */;
+		};
+		2C97CEA42F8EA1070059A00A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2C97CE8A2F8EA1050059A00A /* Postmark */;
+			targetProxy = 2C97CEA32F8EA1070059A00A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2C97CEAA2F8EA1070059A00A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 5ZCL6EK7R3;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2C97CEAB2F8EA1070059A00A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5ZCL6EK7R3;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		2C97CEAD2F8EA1070059A00A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5ZCL6EK7R3;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Postmark/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Postmark;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.decoded.Postmark;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		2C97CEAE2F8EA1070059A00A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5ZCL6EK7R3;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Postmark/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Postmark;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.decoded.Postmark;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		2C97CEB02F8EA1070059A00A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5ZCL6EK7R3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.decoded.PostmarkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Postmark.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Postmark";
+			};
+			name = Debug;
+		};
+		2C97CEB12F8EA1070059A00A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5ZCL6EK7R3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.decoded.PostmarkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Postmark.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Postmark";
+			};
+			name = Release;
+		};
+		2C97CEB32F8EA1070059A00A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5ZCL6EK7R3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.decoded.PostmarkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Postmark;
+			};
+			name = Debug;
+		};
+		2C97CEB42F8EA1070059A00A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5ZCL6EK7R3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.decoded.PostmarkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Postmark;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2C97CE862F8EA1050059A00A /* Build configuration list for PBXProject "Postmark" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C97CEAA2F8EA1070059A00A /* Debug */,
+				2C97CEAB2F8EA1070059A00A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2C97CEAC2F8EA1070059A00A /* Build configuration list for PBXNativeTarget "Postmark" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C97CEAD2F8EA1070059A00A /* Debug */,
+				2C97CEAE2F8EA1070059A00A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2C97CEAF2F8EA1070059A00A /* Build configuration list for PBXNativeTarget "PostmarkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C97CEB02F8EA1070059A00A /* Debug */,
+				2C97CEB12F8EA1070059A00A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2C97CEB22F8EA1070059A00A /* Build configuration list for PBXNativeTarget "PostmarkUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C97CEB32F8EA1070059A00A /* Debug */,
+				2C97CEB42F8EA1070059A00A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2C97CF152F8EB92D0059A00A /* XCRemoteSwiftPackageReference "AppAuth-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/openid/AppAuth-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		2C97CF212F8F741E0059A00A /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/MenuBarExtraAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
+		2CD702C02F90287F004914AA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.12.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2C97CF162F8EB92D0059A00A /* AppAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C97CF152F8EB92D0059A00A /* XCRemoteSwiftPackageReference "AppAuth-iOS" */;
+			productName = AppAuth;
+		};
+		2C97CF182F8EB92D0059A00A /* AppAuthCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C97CF152F8EB92D0059A00A /* XCRemoteSwiftPackageReference "AppAuth-iOS" */;
+			productName = AppAuthCore;
+		};
+		2C97CF222F8F741E0059A00A /* MenuBarExtraAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C97CF212F8F741E0059A00A /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */;
+			productName = MenuBarExtraAccess;
+		};
+		2CD702C12F90287F004914AA /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CD702C02F90287F004914AA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		2CD702C32F90287F004914AA /* FirebaseAnalyticsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CD702C02F90287F004914AA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 2C97CE832F8EA1050059A00A /* Project object */;
+}
