@@ -23,13 +23,15 @@ struct AddAccountView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .padding(20)
+        .background(Color.pmBackground)
     }
 
     private var providerContent: some View {
         VStack(spacing: 20) {
             VStack(spacing: 4) {
                 Text("Choose a provider")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(PMFont.display(20, weight: .bold))
+                    .foregroundStyle(Color.pmInk)
                 Text(
                     "Your credentials are handled directly by the " +
                     "provider - Postmark never sees your password."

@@ -36,31 +36,47 @@ struct EmailDetailView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             header
-            Divider()
+            Rectangle().fill(Color.pmLine).frame(height: 1)
             content
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(Color.pmBackground)
     }
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             Text(message.subject)
-                .font(.title3.bold())
-            VStack(alignment: .leading, spacing: 2) {
-                Text(message.sender)
-                    .font(.subheadline.weight(.semibold))
-                Text(message.senderAddress)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                .font(PMFont.display(24, weight: .bold))
+                .foregroundStyle(Color.pmInk)
+                .fixedSize(horizontal: false, vertical: true)
+            HStack(spacing: 12) {
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(Color.pmAvatar(for: message.senderAddress))
+                    .frame(width: 42, height: 42)
+                    .overlay(
+                        Text(message.senderInitials)
+                            .font(PMFont.body(16, weight: .bold))
+                            .foregroundStyle(.white)
+                    )
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(message.sender)
+                        .font(PMFont.body(14.5, weight: .bold))
+                        .foregroundStyle(Color.pmInk)
+                    Text(
+                        message.senderAddress + " · "
+                            + message.receivedAt.formatted(
+                                date: .abbreviated,
+                                time: .shortened
+                            )
+                    )
+                    .font(PMFont.body(12.5))
+                    .foregroundStyle(Color.pmMuted)
+                    .lineLimit(1)
+                }
+                Spacer(minLength: 0)
             }
-            Text(message.receivedAt.formatted(
-                date: .abbreviated,
-                time: .shortened
-            ))
-            .font(.caption)
-            .foregroundStyle(.secondary)
         }
-        .padding()
+        .padding(20)
     }
 
     @ViewBuilder
@@ -76,8 +92,9 @@ struct EmailDetailView: View {
                 VStack(alignment: .leading, spacing: 14) {
                     ForEach(paragraphItems) { paragraph in
                         Text(paragraph.text)
-                            .font(.body)
-                            .lineSpacing(3)
+                            .font(PMFont.body(14.5))
+                            .foregroundStyle(Color.pmInk)
+                            .lineSpacing(4)
                             .textSelection(.enabled)
                             .frame(
                                 maxWidth: .infinity,
@@ -99,8 +116,12 @@ struct EmailDetailView: View {
                 showQuotedContent.toggle()
             }
             .buttonStyle(.plain)
-            .font(.caption)
-            .padding(.horizontal)
+            .font(PMFont.body(12.5, weight: .semibold))
+            .foregroundStyle(Color.pmMuted)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 7)
+            .background(Capsule().fill(Color.pmSoft))
+            .padding(.horizontal, 20)
             .padding(.vertical, 8)
         }
     }

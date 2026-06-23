@@ -37,4 +37,8 @@ struct GmailProvider: EmailProvider {
     func signOut() throws {
         try authService.signOut()
     }
+
+    func latestChangeToken() async throws -> String? {
+        try await apiClient.fetchProfileHistoryID()
+    }
 }

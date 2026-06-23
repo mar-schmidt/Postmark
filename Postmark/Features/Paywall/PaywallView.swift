@@ -75,7 +75,7 @@ struct PaywallView: View {
                     .foregroundStyle(Color.accentColor)
             }
             Text("Unlock Postmark Pro")
-                .font(.system(size: 22, weight: .bold))
+                .font(PMFont.display(26, weight: .bold))
             Text("Add more than one account and unlock future Pro features.")
                 .font(.system(size: 13))
                 .foregroundStyle(.secondary)

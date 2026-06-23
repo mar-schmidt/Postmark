@@ -10,6 +10,13 @@ final class InboxViewModel: ObservableObject {
     @Published private(set) var isLoadingMore = false
     @Published var errorMessage: String?
     @Published var selectedLabelIDs: [String] = ["INBOX"]
+
+    /// Called when previously-unseen unread messages arrive after the first
+    /// load. Drives system banners and the in-app toast. Set by `AppState`.
+    var onNewMail: ((@MainActor ([EmailMessage]) -> Void))?
+    private var seenMessageIDs: Set<String> = []
+    private var hasEstablishedBaseline = false
+
     private var hasLoadedInitial = false
     private var activeLoadMoreToken: String?
     private var lastLoadMoreTriggerAt: Date?
@@ -50,6 +57,7 @@ final class InboxViewModel: ObservableObject {
             let page = try await syncService.initialLoad(
                 labelIDs: selectedLabelIDs
             )
+            noteArrivals(in: page.messages)
             messages = page.messages
             nextPageToken = page.nextPageToken
             hasLoadedInitial = true
@@ -181,6 +189,24 @@ final class InboxViewModel: ObservableObject {
         }
     }
 
+    /// Detects unread messages that weren't present at the last sync and
+    /// reports them via `onNewMail`. The first successful load only seeds the
+    /// baseline so the user isn't flooded with banners for existing mail.
+    private func noteArrivals(in incoming: [EmailMessage]) {
+        guard hasEstablishedBaseline else {
+            seenMessageIDs = Set(incoming.map(\.id))
+            hasEstablishedBaseline = true
+            return
+        }
+        let arrivals = incoming.filter {
+            $0.isUnread && !seenMessageIDs.contains($0.id)
+        }
+        seenMessageIDs.formUnion(incoming.map(\.id))
+        guard !arrivals.isEmpty else { return }
+        let sorted = arrivals.sorted { $0.receivedAt > $1.receivedAt }
+        onNewMail?(sorted)
+    }
+
     private func matchesCurrentPage(_ page: InboxPage) -> Bool {
         guard nextPageToken == page.nextPageToken else { return false }
         guard messages.count == page.messages.count else { return false }
@@ -190,6 +216,7 @@ final class InboxViewModel: ObservableObject {
     }
 
     private func applyPollingPageUpdate(_ page: InboxPage) {
+        noteArrivals(in: page.messages)
         nextPageToken = page.nextPageToken
 
         let currentIDs = messages.map(\.id)

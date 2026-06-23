@@ -1,12 +1,11 @@
 import SwiftUI
 
 struct EmailRowView: View {
-    private let avatarSize: CGFloat = 38
+    private let avatarSize: CGFloat = 40
 
-    private static let receivedAtFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
+    private static let timeFormatter: RelativeDateTimeFormatter = {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .abbreviated
         return formatter
     }()
 
@@ -18,64 +17,66 @@ struct EmailRowView: View {
         Button {
             onSelect?()
         } label: {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .top, spacing: 12) {
                     avatarView
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(message.sender)
-                            .font(.headline)
-                            .lineLimit(1)
+                        HStack(spacing: 8) {
+                            Text(message.sender)
+                                .font(PMFont.body(14.5, weight: .bold))
+                                .foregroundStyle(Color.pmInk)
+                                .lineLimit(1)
+                            if message.isUnread {
+                                Circle()
+                                    .fill(Color.pmAccent)
+                                    .frame(width: 7, height: 7)
+                            }
+                            Spacer(minLength: 4)
+                            Text(relativeTime)
+                                .font(PMFont.body(12))
+                                .foregroundStyle(Color.pmFaint)
+                        }
                         Text(message.subject)
-                            .font(.subheadline.weight(
-                                message.isUnread ? .semibold : .regular
+                            .font(PMFont.body(
+                                13.5,
+                                weight: message.isUnread ? .semibold : .medium
                             ))
+                            .foregroundStyle(Color.pmInk)
                             .lineLimit(1)
                         Text(message.snippet)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .font(PMFont.body(12.5))
+                            .foregroundStyle(Color.pmMuted)
                             .lineLimit(2)
+                            .multilineTextAlignment(.leading)
                     }
-                    Spacer()
-                    Text(
-                        Self.receivedAtFormatter.string(
-                            from: message.receivedAt
-                        )
-                    )
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
                 }
 
                 if isExpanded {
-                    Divider()
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(message.snippet)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Text("From: \(message.senderAddress)")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Text("Thread: \(message.threadID)")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    .transition(.opacity)
+                    expandedDetail
                 }
             }
-            .padding(10)
+            .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(
-                        message.isUnread
-                            ? Color.surfacePrimary.opacity(0.9)
-                            : Color.surfaceSecondary.opacity(0.7)
-                    )
-            )
-            .clipped()
+            .pmCard(cornerRadius: 18)
             .contentShape(.rect)
         }
-        .accessibilityIdentifier("inbox-message-\(message.id)")
         .buttonStyle(.plain)
+    }
+
+    private var expandedDetail: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            DashedDivider()
+                .padding(.top, 12)
+            Text(message.snippet)
+                .font(PMFont.body(12.5))
+                .foregroundStyle(Color.pmMuted)
+                .multilineTextAlignment(.leading)
+            Text("From: \(message.senderAddress)")
+                .font(PMFont.body(11.5))
+                .foregroundStyle(Color.pmFaint)
+        }
+        .padding(.top, 0)
+        .transition(.opacity)
     }
 
     @ViewBuilder
@@ -84,52 +85,78 @@ struct EmailRowView: View {
             AsyncImage(url: url) { phase in
                 switch phase {
                 case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFill()
+                    image.resizable().scaledToFill()
                 default:
                     fallbackAvatar
                 }
             }
-            .transaction { transaction in
-                transaction.animation = nil
-            }
+            .transaction { $0.animation = nil }
             .frame(width: avatarSize, height: avatarSize)
-            .clipShape(Circle())
+            .clipShape(RoundedRectangle(cornerRadius: 13, style: .continuous))
         } else {
             fallbackAvatar
-                .transaction { transaction in
-                    transaction.animation = nil
-                }
+                .transaction { $0.animation = nil }
         }
     }
 
     private var fallbackAvatar: some View {
-        Circle()
-            .fill(avatarColor)
+        RoundedRectangle(cornerRadius: 13, style: .continuous)
+            .fill(Color.pmAvatar(for: message.senderAddress))
             .frame(width: avatarSize, height: avatarSize)
             .overlay(
                 Text(message.senderInitials)
-                    .font(.caption.weight(.semibold))
+                    .font(PMFont.body(15, weight: .bold))
                     .foregroundStyle(.white)
             )
     }
 
-    private var avatarColor: Color {
-        let palette = Color.tagPalette
-        let seed = message.senderAddress.unicodeScalars.reduce(0) {
-            $0 + Int($1.value)
+    private var relativeTime: String {
+        Self.timeFormatter.localizedString(
+            for: message.receivedAt,
+            relativeTo: Date()
+        )
+    }
+}
+
+/// A hairline dashed rule used inside expanded cards.
+struct DashedDivider: View {
+    var body: some View {
+        Rectangle()
+            .fill(Color.clear)
+            .frame(height: 1)
+            .overlay(
+                Line()
+                    .stroke(
+                        Color.pmLine,
+                        style: StrokeStyle(lineWidth: 1, dash: [3, 3])
+                    )
+            )
+    }
+
+    private struct Line: Shape {
+        func path(in rect: CGRect) -> Path {
+            var path = Path()
+            path.move(to: CGPoint(x: 0, y: rect.midY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+            return path
         }
-        return palette[seed % palette.count]
     }
 }
 
 #Preview {
-    EmailRowView(
-        message: PreviewFixtures.messages[0],
-        isExpanded: true,
-        onSelect: {}
-    )
+    VStack {
+        EmailRowView(
+            message: PreviewFixtures.messages[0],
+            isExpanded: true,
+            onSelect: {}
+        )
+        EmailRowView(
+            message: PreviewFixtures.messages[1],
+            isExpanded: false,
+            onSelect: {}
+        )
+    }
     .padding()
     .frame(width: 380)
+    .background(Color.pmBackground)
 }

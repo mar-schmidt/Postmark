@@ -91,6 +91,17 @@ actor GmailAPIClient {
         return response.emailAddress
     }
 
+    /// The mailbox `historyId` — a monotonic token that advances on any
+    /// change. One tiny request; used to gate near-real-time polling.
+    func fetchProfileHistoryID() async throws -> String? {
+        let url = baseURL.appending(path: "users/me/profile")
+        let response = try await request(
+            url: url,
+            method: "GET"
+        ) as GmailProfileResponse
+        return response.historyId
+    }
+
     func fetchLabels() async throws -> [EmailLabel] {
         let url = baseURL.appending(path: "users/me/labels")
         let response = try await request(
@@ -273,6 +284,7 @@ actor GmailAPIClient {
 
 private struct GmailProfileResponse: Decodable {
     let emailAddress: String
+    let historyId: String?
 }
 
 private struct GmailListResponse: Decodable {

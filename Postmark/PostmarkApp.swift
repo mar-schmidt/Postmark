@@ -24,6 +24,7 @@ struct PostmarkApp: App {
             uiTestInboxArgument
         )
         _isMenuPresented = State(initialValue: isUITestInboxMode)
+        PMFontRegistrar.registerIfNeeded()
         configureFirebaseIfNeeded()
     }
 
@@ -160,6 +161,11 @@ final class MenuBarStatusController: NSObject {
             return
         }
         hasBoundState = true
+
+        appState.requestShowPanel = { [weak self] in
+            self?.showPanelIfPossible()
+        }
+        appState.configureNewMailNotifications()
 
         appState.$authState
             .removeDuplicates()

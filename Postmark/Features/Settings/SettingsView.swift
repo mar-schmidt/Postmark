@@ -25,7 +25,7 @@ struct SettingsView: View {
             }
             .padding(12)
         }
-        // .background(Color.appBackgroundNeutral.opacity(0.35))
+        .background(Color.pmBackground)
         .task {
             await loadLabels()
         }
@@ -580,8 +580,12 @@ private extension View {
             .padding(padding)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                  .fill(Color.gray.opacity(0.05))
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(Color.pmSurface)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .strokeBorder(Color.pmLine, lineWidth: 1)
             )
     }
 }

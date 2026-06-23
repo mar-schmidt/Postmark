@@ -29,6 +29,15 @@ final class AppState: ObservableObject {
     @Published var isPaywallPresented = false
     @Published var selectedPaywallProductID: String?
 
+    /// The most recent new-mail arrival, shown as an in-app toast. Nil when
+    /// no toast is visible.
+    @Published var newMailToast: NewMailItem?
+
+    /// Set by the menu-bar controller so notification taps can reveal the
+    /// inbox panel.
+    var requestShowPanel: (() -> Void)?
+    private var toastDismissTask: Task<Void, Never>?
+
     private(set) var unreadCountsByAccountID: [UUID: Int] = [:]
     let providerManager: ProviderManager
     private let keychainTokenStore: KeychainTokenStore
@@ -503,6 +512,87 @@ final class AppState: ObservableObject {
         }
     }
 
+    // MARK: - New mail
+
+    /// Registers the notifier delegate and asks for banner permission. Called
+    /// once at launch.
+    func configureNewMailNotifications() {
+        NewMailNotifier.shared.configure()
+        NewMailNotifier.shared.requestAuthorization()
+        NewMailNotifier.shared.onOpen = { [weak self] messageID in
+            self?.handleNotificationOpen(messageID: messageID)
+        }
+        NewMailNotifier.shared.onArchive = { [weak self] messageID in
+            Task { await self?.archiveByID(messageID) }
+        }
+    }
+
+    /// Wires a freshly-created inbox view model to the new-mail pipeline.
+    private func wireNewMail(_ viewModel: InboxViewModel) {
+        viewModel.onNewMail = { [weak self] arrivals in
+            self?.handleNewMail(arrivals)
+        }
+    }
+
+    private func handleNewMail(_ arrivals: [EmailMessage]) {
+        guard authState == .signedIn, !arrivals.isEmpty else { return }
+        for message in arrivals.prefix(5) {
+            NewMailNotifier.shared.post(NewMailItem(message: message))
+        }
+        if let newest = arrivals.first {
+            presentToast(NewMailItem(message: newest))
+        }
+        if let activeID = activeAccount?.id {
+            refreshUnreadCount(for: activeID)
+        }
+    }
+
+    private func presentToast(_ item: NewMailItem) {
+        toastDismissTask?.cancel()
+        withAnimation(.spring(response: 0.34, dampingFraction: 0.82)) {
+            newMailToast = item
+        }
+        toastDismissTask = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(5))
+            guard !Task.isCancelled else { return }
+            await MainActor.run { self?.dismissToast() }
+        }
+    }
+
+    func dismissToast() {
+        toastDismissTask?.cancel()
+        withAnimation(.easeInOut(duration: 0.2)) {
+            newMailToast = nil
+        }
+    }
+
+    /// Opens the message behind a toast/notification, revealing the panel.
+    func openToastMessage() {
+        let messageID = newMailToast?.id
+        dismissToast()
+        if let messageID { handleNotificationOpen(messageID: messageID) }
+    }
+
+    func archiveToastMessage() {
+        guard let messageID = newMailToast?.id else { return }
+        dismissToast()
+        Task { await archiveByID(messageID) }
+    }
+
+    private func handleNotificationOpen(messageID: String) {
+        requestShowPanel?()
+    }
+
+    private func archiveByID(_ messageID: String) async {
+        guard let message = inboxViewModel.messages.first(
+            where: { $0.id == messageID }
+        ) else { return }
+        await inboxViewModel.archive(message)
+        if let activeID = activeAccount?.id {
+            refreshUnreadCount(for: activeID)
+        }
+    }
+
     func installSessionForTesting(
         account: Account,
         provider: any EmailProvider,
@@ -556,6 +646,7 @@ final class AppState: ObservableObject {
                 inboxViewModel: viewModel
             )
             sessionsByAccountID[account.id] = session
+            wireNewMail(viewModel)
             providerManager.register(provider: provider, for: account.id)
             validAccounts.append(account)
         }
@@ -655,6 +746,7 @@ final class AppState: ObservableObject {
         makeActive: Bool
     ) {
         sessionsByAccountID[session.id] = session
+        wireNewMail(session.inboxViewModel)
         providerManager.register(provider: session.provider, for: session.id)
         var updated = accounts.filter { $0.id != account.id }
         updated.append(account)
