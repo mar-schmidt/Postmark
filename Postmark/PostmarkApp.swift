@@ -100,7 +100,6 @@ final class MenuBarStatusController: NSObject {
     private weak var boundAppState: AppState?
     private var isMenuPresented: Binding<Bool>?
     private var panelController: NSWindowController?
-    private var statusClickMonitor: Any?
     private var isBadgeVisible = false
     private var cancellables = Set<AnyCancellable>()
     private var hasBoundState = false
@@ -140,7 +139,6 @@ final class MenuBarStatusController: NSObject {
         button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         installBadgeIfNeeded(on: button)
         applyBadgeVisibility()
-        installStatusClickMonitorIfNeeded()
     }
 
     func setBadgeVisible(_ isVisible: Bool) {
@@ -233,38 +231,6 @@ final class MenuBarStatusController: NSObject {
         statusItem.popUpMenu(contextMenu)
     }
 
-    @objc private func togglePanelFromStatusItem() {
-        guard let button = statusButton else { return }
-        if NSApp.currentEvent?.type == .rightMouseUp {
-            hidePanel()
-            presentContextMenu(using: button)
-            return
-        }
-        if panelController?.window?.isVisible == true {
-            hidePanel()
-        } else {
-            showPanel()
-        }
-    }
-
-    private func installStatusClickMonitorIfNeeded() {
-        guard statusClickMonitor == nil else { return }
-        statusClickMonitor = NSEvent.addLocalMonitorForEvents(
-            matching: [.leftMouseUp, .rightMouseUp]
-        ) { [weak self] event in
-            guard let self else { return event }
-            guard let button = self.statusButton else { return event }
-            guard self.isEvent(event, on: button) else { return event }
-            self.handleStatusItemMouseUp(event)
-            return nil
-        }
-    }
-
-    private func handleStatusItemMouseUp(_ event: NSEvent) {
-        guard let button = statusButton else { return }
-        handleStatusToggle(eventType: event.type, button: button)
-    }
-
     @objc private func handleStatusButtonAction(_ sender: NSStatusBarButton) {
         let eventType = NSApp.currentEvent?.type ?? .applicationDefined
         handleStatusToggle(eventType: eventType, button: sender)
@@ -347,14 +313,6 @@ final class MenuBarStatusController: NSObject {
         panel.setFrameOrigin(NSPoint(x: clampedX, y: clampedY))
     }
 
-    private func isEvent(_ event: NSEvent, on button: NSStatusBarButton) -> Bool {
-        guard let buttonWindow = button.window else { return false }
-        let buttonRect = button.convert(button.bounds, to: nil)
-        let buttonScreenRect = buttonWindow.convertToScreen(buttonRect)
-        let mouse = NSEvent.mouseLocation
-        return buttonScreenRect.contains(mouse)
-    }
-
     private func handleStatusToggle(
         eventType: NSEvent.EventType,
         button: NSStatusBarButton
@@ -414,12 +372,6 @@ final class MenuBarStatusController: NSObject {
 
     @objc private func quitPostmark() {
         NSApplication.shared.terminate(nil)
-    }
-
-    deinit {
-        if let statusClickMonitor {
-            NSEvent.removeMonitor(statusClickMonitor)
-        }
     }
 }
 
