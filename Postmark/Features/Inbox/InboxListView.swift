@@ -37,10 +37,31 @@ struct InboxListView: View {
         .onChange(of: viewModel.errorMessage) { _, _ in
             isErrorExpanded = false
         }
+        .onChange(of: appState.pendingDeepLinkMessageID) { _, messageID in
+            openDeepLinkedMessage(messageID)
+        }
         .task {
             await appState.runStartupSyncIfNeeded()
             await loadLabelNames()
+            // A tap may have set a deep link before this view existed (e.g. the
+            // panel was created in response to the notification).
+            openDeepLinkedMessage(appState.pendingDeepLinkMessageID)
         }
+    }
+
+    /// Navigates straight to the deep-linked message's detail screen, falling
+    /// back to revealing the inbox if it is not currently loaded.
+    private func openDeepLinkedMessage(_ messageID: String?) {
+        guard let messageID else { return }
+        defer { appState.consumeDeepLink() }
+        guard let message = viewModel.messages.first(
+            where: { $0.id == messageID }
+        ) else {
+            navigate(to: .inbox)
+            return
+        }
+        expandedMessageID = nil
+        navigate(to: .detail(message))
     }
 
     @ViewBuilder

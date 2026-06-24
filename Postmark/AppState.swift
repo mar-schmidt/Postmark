@@ -33,6 +33,12 @@ final class AppState: ObservableObject {
     /// no toast is visible.
     @Published var newMailToast: NewMailItem?
 
+    /// Set when a notification/toast tap should deep-link straight to a
+    /// specific message. The inbox view observes this, opens the matching
+    /// message's detail screen, and clears it. Nil when there is no pending
+    /// deep link.
+    @Published var pendingDeepLinkMessageID: String?
+
     /// Set by the menu-bar controller so notification taps can reveal the
     /// inbox panel.
     var requestShowPanel: (() -> Void)?
@@ -580,7 +586,14 @@ final class AppState: ObservableObject {
     }
 
     private func handleNotificationOpen(messageID: String) {
+        pendingDeepLinkMessageID = messageID
         requestShowPanel?()
+    }
+
+    /// Marks a pending deep link as handled so a later tap on the same message
+    /// re-triggers navigation.
+    func consumeDeepLink() {
+        pendingDeepLinkMessageID = nil
     }
 
     private func archiveByID(_ messageID: String) async {
