@@ -56,6 +56,24 @@ final class AppState: ObservableObject {
 
     private static let accountsKey = "accounts"
     private static let editingAccountIDKey = "editingAccountID"
+
+    /// UserDefaults key + bounds for how long the in-app new-mail toast stays
+    /// visible. Bound to the slider in Settings; read by `presentToast`.
+    static let newMailToastDurationKey = "newMailToastDurationSeconds"
+    static let newMailToastDurationDefault: Double = 5
+    static let newMailToastDurationRange: ClosedRange<Double> = 5...20
+    static let newMailToastDurationStep: Double = 2
+
+    /// Resolved toast duration in seconds, clamped to the supported range.
+    /// Falls back to the default when unset.
+    static var newMailToastDuration: Double {
+        let stored = UserDefaults.standard.object(
+            forKey: newMailToastDurationKey
+        ) as? Double
+        let value = stored ?? newMailToastDurationDefault
+        return min(max(value, newMailToastDurationRange.lowerBound),
+                   newMailToastDurationRange.upperBound)
+    }
     private static let uiTestInboxArgument = "--uitest-inbox"
     private static let uiTestPaywallPurchasingArgument =
         "--uitest-paywall-purchasing"
@@ -559,7 +577,7 @@ final class AppState: ObservableObject {
             newMailToast = item
         }
         toastDismissTask = Task { [weak self] in
-            try? await Task.sleep(for: .seconds(5))
+            try? await Task.sleep(for: .seconds(Self.newMailToastDuration))
             guard !Task.isCancelled else { return }
             await MainActor.run { self?.dismissToast() }
         }

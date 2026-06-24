@@ -9,6 +9,8 @@ struct SettingsView: View {
     @State private var isLabelsExpanded = false
     @State private var reloadRotation: Double = 0
     @State private var isRemoveAlertPresented = false
+    @AppStorage(AppState.newMailToastDurationKey)
+    private var toastDuration: Double = AppState.newMailToastDurationDefault
 
     init(onAddAccount: @escaping () -> Void = {}) {
         self.onAddAccount = onAddAccount
@@ -20,6 +22,7 @@ struct SettingsView: View {
                 accountsCard
                 scopeDivider
                 interactionCard
+                notificationsCard
                 labelsCard
                 footerRow
             }
@@ -174,6 +177,43 @@ struct SettingsView: View {
             .animation(.easeInOut(duration: 0.12), value: selectedBehavior)
         }
         .cardBackground(padding: 14)
+    }
+
+    private var notificationsCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                SectionLabel("New email notification")
+                Spacer()
+                Text("\(Int(clampedToastDuration))s")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(Color.accentColor)
+                    .monospacedDigit()
+            }
+            Text("How long the in-app new-mail banner stays on screen.")
+                .font(.system(size: 11))
+                .foregroundStyle(.secondary)
+            Slider(
+                value: $toastDuration,
+                in: AppState.newMailToastDurationRange,
+                step: AppState.newMailToastDurationStep
+            ) {
+                Text("Notification duration")
+            } minimumValueLabel: {
+                Text("\(Int(AppState.newMailToastDurationRange.lowerBound))s")
+                    .font(.system(size: 10))
+                    .foregroundStyle(.secondary)
+            } maximumValueLabel: {
+                Text("\(Int(AppState.newMailToastDurationRange.upperBound))s")
+                    .font(.system(size: 10))
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .cardBackground(padding: 14)
+    }
+
+    private var clampedToastDuration: Double {
+        min(max(toastDuration, AppState.newMailToastDurationRange.lowerBound),
+            AppState.newMailToastDurationRange.upperBound)
     }
 
     private func behaviorCard(
