@@ -42,6 +42,14 @@ final class AppState: ObservableObject {
     /// Set by the menu-bar controller so notification taps can reveal the
     /// inbox panel.
     var requestShowPanel: (() -> Void)?
+    /// Set by the menu-bar controller. Reports whether the inbox panel is
+    /// currently on screen, so new mail can route to the in-app toast (panel
+    /// open) or the floating toast window (panel closed).
+    var isPanelVisible: (() -> Bool)?
+    /// Set by the menu-bar controller. Presents the standalone floating toast
+    /// window — the on-screen replacement for the system banner shown while
+    /// the panel is closed.
+    var presentFloatingToast: ((NewMailItem) -> Void)?
     private var toastDismissTask: Task<Void, Never>?
 
     private(set) var unreadCountsByAccountID: [UUID: Int] = [:]
@@ -538,18 +546,10 @@ final class AppState: ObservableObject {
 
     // MARK: - New mail
 
-    /// Registers the notifier delegate and asks for banner permission. Called
-    /// once at launch.
-    func configureNewMailNotifications() {
-        NewMailNotifier.shared.configure()
-        NewMailNotifier.shared.requestAuthorization()
-        NewMailNotifier.shared.onOpen = { [weak self] messageID in
-            self?.handleNotificationOpen(messageID: messageID)
-        }
-        NewMailNotifier.shared.onArchive = { [weak self] messageID in
-            Task { await self?.archiveByID(messageID) }
-        }
-    }
+    /// Hook for any one-time new-mail notification setup. The floating toast
+    /// window (presented while the panel is closed) now replaces the macOS
+    /// system banner, so there is no UNUserNotificationCenter wiring here.
+    func configureNewMailNotifications() {}
 
     /// Wires a freshly-created inbox view model to the new-mail pipeline.
     private func wireNewMail(_ viewModel: InboxViewModel) {
@@ -560,11 +560,15 @@ final class AppState: ObservableObject {
 
     private func handleNewMail(_ arrivals: [EmailMessage]) {
         guard authState == .signedIn, !arrivals.isEmpty else { return }
-        for message in arrivals.prefix(5) {
-            NewMailNotifier.shared.post(NewMailItem(message: message))
-        }
         if let newest = arrivals.first {
-            presentToast(NewMailItem(message: newest))
+            let item = NewMailItem(message: newest)
+            // Panel open: drop the toast into the panel. Panel closed: surface
+            // the floating toast window, which replaces the system banner.
+            if isPanelVisible?() ?? false {
+                presentToast(item)
+            } else {
+                presentFloatingToast?(item)
+            }
         }
         if let activeID = activeAccount?.id {
             refreshUnreadCount(for: activeID)
@@ -601,6 +605,16 @@ final class AppState: ObservableObject {
         guard let messageID = newMailToast?.id else { return }
         dismissToast()
         Task { await archiveByID(messageID) }
+    }
+
+    /// Opens the message behind a floating toast, revealing the panel.
+    func handleFloatingToastOpen(_ item: NewMailItem) {
+        handleNotificationOpen(messageID: item.id)
+    }
+
+    /// Archives the message behind a floating toast.
+    func handleFloatingToastArchive(_ item: NewMailItem) {
+        Task { await archiveByID(item.id) }
     }
 
     private func handleNotificationOpen(messageID: String) {

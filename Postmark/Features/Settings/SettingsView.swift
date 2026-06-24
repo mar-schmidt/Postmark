@@ -189,7 +189,7 @@ struct SettingsView: View {
                     .foregroundStyle(Color.accentColor)
                     .monospacedDigit()
             }
-            Text("How long the in-app new-mail banner stays on screen.")
+            Text("How long the new-mail notification stays on screen.")
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
             Slider(

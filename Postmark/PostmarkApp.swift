@@ -104,6 +104,7 @@ final class MenuBarStatusController: NSObject {
     private var isBadgeVisible = false
     private var cancellables = Set<AnyCancellable>()
     private var hasBoundState = false
+    private let floatingToast = FloatingToastController()
 
     private lazy var contextMenu: NSMenu = {
         let menu = NSMenu()
@@ -164,6 +165,21 @@ final class MenuBarStatusController: NSObject {
 
         appState.requestShowPanel = { [weak self] in
             self?.showPanelIfPossible()
+        }
+        appState.isPanelVisible = { [weak self] in
+            self?.panelController?.window?.isVisible ?? false
+        }
+        floatingToast.onOpen = { [weak appState] item in
+            appState?.handleFloatingToastOpen(item)
+        }
+        floatingToast.onArchive = { [weak appState] item in
+            appState?.handleFloatingToastArchive(item)
+        }
+        appState.presentFloatingToast = { [weak self] item in
+            self?.floatingToast.present(
+                item,
+                duration: AppState.newMailToastDuration
+            )
         }
         appState.configureNewMailNotifications()
 
