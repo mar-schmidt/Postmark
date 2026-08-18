@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>GOOGLE_CLIENT_ID</key>
-	<string>REMOVED-ROTATED-CREDENTIAL</string>
+	<string>$(GOOGLE_CLIENT_ID)</string>
 	<key>GOOGLE_CLIENT_SECRET</key>
-	<string>REMOVED-ROTATED-CREDENTIAL</string>
+	<string>$(GOOGLE_CLIENT_SECRET)</string>
 	<key>LSUIElement</key>
 	<true/>
 </dict>

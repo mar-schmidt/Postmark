@@ -37,19 +37,26 @@ struct GoogleOAuthConfiguration {
     let successRedirectURL: URL?
     let scopes: [String]
 
-    static func fromBundle() -> GoogleOAuthConfiguration? {
-        guard let id = Bundle.main.object(
-            forInfoDictionaryKey: "GOOGLE_CLIENT_ID"
+    /// Reads an Info.plist entry, treating blank values as absent. Credentials are
+    /// injected from Config/Secrets.xcconfig at build time, so an unconfigured
+    /// checkout leaves these keys as empty strings rather than removing them.
+    private static func infoValue(_ key: String) -> String? {
+        guard let value = Bundle.main.object(
+            forInfoDictionaryKey: key
         ) as? String else {
             return nil
         }
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
+    }
 
-        let secret = Bundle.main.object(
-            forInfoDictionaryKey: "GOOGLE_CLIENT_SECRET"
-        ) as? String
-        let success = Bundle.main.object(
-            forInfoDictionaryKey: "GOOGLE_OAUTH_SUCCESS_URL"
-        ) as? String
+    static func fromBundle() -> GoogleOAuthConfiguration? {
+        guard let id = infoValue("GOOGLE_CLIENT_ID") else {
+            return nil
+        }
+
+        let secret = infoValue("GOOGLE_CLIENT_SECRET")
+        let success = infoValue("GOOGLE_OAUTH_SUCCESS_URL")
 
         return GoogleOAuthConfiguration(
             clientID: id,

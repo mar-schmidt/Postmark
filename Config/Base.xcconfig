@@ -1,0 +1,11 @@
+// Base build settings for all configurations.
+//
+// Credentials are NOT stored here. Real values belong in Config/Secrets.xcconfig,
+// which is git-ignored. Copy Config/Secrets.example.xcconfig to Config/Secrets.xcconfig
+// and fill it in. If that file is absent the build still succeeds; the app then
+// reports a missing-configuration error instead of silently using bad credentials.
+
+GOOGLE_CLIENT_ID =
+GOOGLE_CLIENT_SECRET =
+
+#include? "Secrets.xcconfig"

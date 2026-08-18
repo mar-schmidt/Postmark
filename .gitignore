@@ -66,3 +66,14 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+## Secrets
+# Real OAuth credentials live here; only Secrets.example.xcconfig is committed.
+Config/Secrets.xcconfig
+*.env
+.env.local
+
+## Build archives
+# Archives embed the built Info.plist (and therefore credentials) — never commit them.
+artifacts/
+*.xcarchive
