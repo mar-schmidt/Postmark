@@ -13,9 +13,9 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "A clean macOS menu bar app for Gmail. Triage your inbox, read messages, and reply without leaving what you're doing." },
       { property: "og:title", content: "Postmark — Fast, focused Gmail in your menu bar" },
       { property: "og:description", content: "A clean macOS menu bar app for Gmail. Triage, read, and reply without clutter." },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://postmarkmailapp.com/" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://postmarkmailapp.com/" }],
   }),
 });
 

@@ -8,9 +8,9 @@ export const Route = createFileRoute("/terms")({
       { title: "Terms of Service — Postmark" },
       { name: "description", content: "Terms governing the use of the Postmark app." },
       { property: "og:title", content: "Terms of Service — Postmark" },
-      { property: "og:url", content: "/terms" },
+      { property: "og:url", content: "https://postmarkmailapp.com/terms" },
     ],
-    links: [{ rel: "canonical", href: "/terms" }],
+    links: [{ rel: "canonical", href: "https://postmarkmailapp.com/terms" }],
   }),
 });
 

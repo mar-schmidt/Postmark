@@ -8,9 +8,9 @@ export const Route = createFileRoute("/privacy")({
       { title: "Privacy Policy — Postmark" },
       { name: "description", content: "How Postmark handles your data and Gmail account." },
       { property: "og:title", content: "Privacy Policy — Postmark" },
-      { property: "og:url", content: "/privacy" },
+      { property: "og:url", content: "https://postmarkmailapp.com/privacy" },
     ],
-    links: [{ rel: "canonical", href: "/privacy" }],
+    links: [{ rel: "canonical", href: "https://postmarkmailapp.com/privacy" }],
   }),
 });
 
