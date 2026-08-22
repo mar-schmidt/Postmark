@@ -54,15 +54,9 @@ final class InboxViewModel: ObservableObject {
             nextPageToken = page.nextPageToken
             hasLoadedInitial = true
             if force {
-                FirebaseAnalyticsService.shared.log(
-                    .inboxRefresh,
-                    parameters: ["message_count": .int(page.messages.count)]
-                )
+                FirebaseAnalyticsService.shared.log(.inboxRefresh)
             } else if !wasLoadedBeforeRequest {
-                FirebaseAnalyticsService.shared.log(
-                    .inboxInitialLoaded,
-                    parameters: ["message_count": .int(page.messages.count)]
-                )
+                FirebaseAnalyticsService.shared.log(.inboxInitialLoaded)
             }
             if shouldPoll {
                 beginPolling()
